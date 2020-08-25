@@ -1,0 +1,5 @@
+### To find in local DB
+GET http://localhost:8080/api/local/address/b99f274f-75b8-4172-941d-b7c40a2b1ae5
+
+### To find uding Dadata Suggestion API
+GET http://localhost:8080/api/remote/address/b99f274f-75b8-4172-941d-b7c40a2b1ae5
