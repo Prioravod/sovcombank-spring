@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${datasource_url:jdbc:postgresql://172.16.9.93:5432/ib}?currentSchema=sovcombank_schema
+    username: ${datasource_username:sovcom_ms}
+    password: ${datasource_password:sovcom_ms}
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 7190000
+      minimumIdle: 2
+      maximumPoolSize: 50
+    tomcat:
+      max-idle: 2
+      min-idle: 2
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: com.petrovpavel.localservice.jpa.NamingStrategy

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  discovery:
+    image: consul:1.7
+    ports:
+      - 8500:8500
+
+  scb-consul-remote-service:
+    image: sovcombank-spring/scb-consul-remote-service
+    environment:
+      - JAVA_TOOL_OPTIONS=
+        -DCONSUL_HOST=discovery
+    depends_on:
+      - discovery
+
+  scb-consul-local-service:
+    image: sovcombank-spring/scb-consul-local-service
+    environment:
+      - JAVA_TOOL_OPTIONS=
+        -DCONSUL_HOST=discovery
+    depends_on:
+      - discovery
+
+  scb-consul-gateway:
+    image: sovcombank-spring/scb-consul-gateway
+    ports:
+      - 8080:8080
+    environment:
+      - JAVA_TOOL_OPTIONS=
+        -DCONSUL_HOST=discovery
+    depends_on:
+      - discovery
+#http://172.16.9.93:8500/ui/dc1/services

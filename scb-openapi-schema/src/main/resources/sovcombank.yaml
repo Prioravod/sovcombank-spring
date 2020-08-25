@@ -1,0 +1,131 @@
+openapi: 3.0.1
+info:
+  title: Search API
+  description: Release search in local & remote DB.
+  version: 1.0.0
+tags:
+  - name: sovcom-resource
+    description: Sovcombank resource
+components:
+  schemas:
+    ShortAddress:
+      type: object
+      description: Simple address implementation
+      properties:
+        postalCode:
+          type: string
+          description: Postal code for this building
+        city:
+          type: string
+          description: City name
+        street:
+          type: string
+          description: Street name
+        house:
+          type: string
+          description: House name/number
+        kladrId:
+          type: string
+          description: KLARD code
+        fiasId:
+          type: string
+          description: FIAS code
+    Error:
+      type: object
+      description: Error description
+      properties:
+        timestamp:
+          type: string
+          description: Date and time the error occurred
+          format: date-time
+          example: '2020-08-16T10:15:30+01:00'
+        status:
+          type: integer
+          description: HTTP status code of the error
+          format: int32
+          example: 404
+        errorCode:
+          type: string
+          description: >
+            Business error code that allows using 'additional' or
+            redefines 'message'
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          description: Error message
+        path:
+          type: string
+          description: URL that resulted in the error
+          example: /address/clean/adr0code
+        additional:
+          type: object
+          description: >
+            Additional information on the error that is a map of keys and
+            values. Different error code can have different keys.
+          additionalProperties:
+            type: object
+  responses:
+    BadRequest:
+      description: Supplied request data are invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+paths:
+#  /address/clean/{dirtyAddress}:
+#    get:
+#      tags:
+#        - sovcom-resource
+#      summary: Clean address
+#      operationId: getAddress
+#      parameters:
+#        - name: dirtyAddress
+#          in: path
+#          description: Unstandardized address
+#          required: true
+#          schema:
+#            type: string
+#      responses:
+#        "200":
+#          description: Address
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Address"
+#        "400":
+#          $ref: '#/components/responses/BadRequest'
+
+  /address/{code}:
+    get:
+      tags:
+        - sovcom-resource
+      summary: Find address by KLADR or FIAS code
+      operationId: getAddressByCode
+      parameters:
+        - name: code
+          in: path
+          description: KLADR or FIAS code
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShortAddress"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+
+

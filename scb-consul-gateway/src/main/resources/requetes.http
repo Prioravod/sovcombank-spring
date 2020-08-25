@@ -1,0 +1,8 @@
+###
+GET http://localhost:8080/api/remote/messages/0
+
+###
+GET http://localhost:8080/api/remote/messages/subscribe
+
+###
+POST http://localhost:8080/api/local/login?login=fred&password=fred

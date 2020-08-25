@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="prefix" value="scb"/>
+    <property name="general_tablespace" value="pg_default"/>
+    <property name="index_tablespace" value="pg_default"/>
+    <property name="schema" value="sovcombank_schema"/>
+
+    <include file="db/changelog/changelog-v1.0-cumulative.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
