@@ -27,7 +27,7 @@ public class SovcomRemoteResource implements SovcomResourceApi {
     public ResponseEntity<ShortAddress> getAddressByCode(String code) {
         ShortAddress address = service.getShortAddressBySuggestion(code);
         HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(address, headers, address != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(address, headers, address.getFiasId() != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
 }

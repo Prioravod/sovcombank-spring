@@ -17,15 +17,67 @@ public class GatewayApplication {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/api/local/**")
-                        .filters(f -> f.rewritePath("/api/local/(?<remains>.*)", "/${remains}"))
+                        .filters(f -> f.rewritePath("/api/local/(?<remains>.*)", "/${remains}")
+//                                .hystrix(h -> h.setFallbackUri("forward:/to-remote-service"))
+                        )
                         .uri("lb://local-service")
                         .id("local-service"))
                 .route( r-> r.path("/api/remote/**")
-                        .filters(f -> f.rewritePath("/api/remote/(?<remains>.*)","/${remains}"))
+                        .filters(f -> f.rewritePath("/api/remote/(?<remains>.*)","/${remains}")
+//                                .hystrix(h -> h.setFallbackUri("forward:/to-local-service"))
+                        )
                         .uri("lb://remote-service")
                         .id("remote-service")
                 )
                 .build();
     }
-
 }
+//args:
+//            name: local-service-fallback
+//            fallbackUri: forward:/fallback/foo
+
+//return builder.routes()
+//        .route(p -> p
+//            .path("/get")
+//            .filters(f -> f.addRequestHeader("Hello", "World"))
+//            .uri("http://httpbin.org:80"))
+//        .route(p -> p
+//            .host("*.hystrix.com")
+//            .filters(f -> f.hystrix(config -> config
+//                .setName("mycmd")
+//                .setFallbackUri("forward:/fallback")))
+//            .uri("http://httpbin.org:80"))
+//        .build();
+
+//    @Bean
+//    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route(r -> r.path("/api/local/**")
+//                        .filters(f -> f.rewritePath("/api/local/(?<remains>.*)", "/${remains}"))
+//                        .uri("lb://local-service")
+//                        .id("local-service"))
+//                .route( r-> r.path("/api/remote/**")
+//                        .filters(f -> f.rewritePath("/api/remote/(?<remains>.*)","/${remains}"))
+//                        .uri("lb://remote-service")
+//                        .id("remote-service")
+//                )
+//                .build();
+//    }
+//@Bean
+//    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route(r -> r.path("/api/local/**")
+//                        .filters(f -> f.rewritePath("/api/local/(?<remains>.*)", "/${remains}")
+//                                .hystrix(h -> h.setFallbackUri("forward:/to-remote-service"))
+//                        )
+//                        .uri("lb://local-service")
+//                        .id("local-service"))
+//                .route( r-> r.path("/api/remote/**")
+//                        .filters(f -> f.rewritePath("/api/remote/(?<remains>.*)","/${remains}")
+//                                .hystrix(h -> h.setFallbackUri("forward:/to-local-service"))
+//                        )
+//                        .uri("lb://remote-service")
+//                        .id("remote-service")
+//                )
+//                .build();
+//    }

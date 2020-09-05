@@ -30,9 +30,15 @@ public class SovcomLocalServiceImpl {
         return StringUtils.isNotEmpty(city) ? locationRepository.findAllByCity(city) : new ArrayList<>();
     }
 
-    public ShortAddress findByFiasCode(String fiasCode){
+    public ShortAddress findByFiasCode(String fiasCode) {
         Location location = locationRepository.findByFiasCode(fiasCode);
-        if (location == null) return null;
-        else return mapperFacade.map(location, ShortAddress.class);
+        ShortAddress res = (location != null) ?
+                mapperFacade.map(location, ShortAddress.class) : new ShortAddress();
+        if (res.getFiasId() == null) {
+            try {
+                Thread.sleep(2000);
+            } catch (Exception ignored) {}
+        }
+        return res;
     }
 }

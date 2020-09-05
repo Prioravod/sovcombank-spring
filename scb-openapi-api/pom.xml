@@ -72,7 +72,7 @@
                                 <useTags>true</useTags>
                             </configOptions>
 <!--                            <importMappings>-->
-<!--                                <importMapping>Address=ru.redcom.lib.integration.api.client.dadata.dto.Address</importMapping>-->
+<!--                                <importMapping>ServerWebExchange=org.springframework.web.server.ServerWebExchange</importMapping>-->
 <!--                            </importMappings>-->
                         </configuration>
                     </execution>
