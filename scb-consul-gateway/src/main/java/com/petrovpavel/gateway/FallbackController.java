@@ -3,7 +3,6 @@ package com.petrovpavel.gateway;
 import com.petrovpavel.service.openapi.model.ShortAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,30 +24,28 @@ import java.util.LinkedHashSet;
 public class FallbackController {
 
     @GetMapping("/to-remote-service")
-    public Mono<ShortAddress> localFallback(ServerWebExchange exchange) {
-        return redirect(exchange, "local","remote");
-    }
-
-    @GetMapping("/to-local-service")
-    public Mono<ShortAddress> remoteFallback(ServerWebExchange exchange) {
-        return redirect(exchange, "remote","local");
-    }
-
-    private Mono<ShortAddress> redirect(ServerWebExchange exchange, String originalService, String destService){
+    public Mono<ShortAddress> localFallback(ServerWebExchange exchange){
         Throwable throwable = exchange.getAttributeOrDefault(
                 ServerWebExchangeUtils.HYSTRIX_EXECUTION_EXCEPTION_ATTR,null);
-        log.warn("Worked Fallback func in {} service. Try to call {} service. Cause: {}",
-                originalService, destService, throwable.getClass());
+        log.warn("Worked Fallback func in local service. Try to call remote service. Cause: {}", throwable.getClass());
         LinkedHashSet<URI> originalRequestUris = exchange.getAttributeOrDefault(
                 ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR,null);
         String path = originalRequestUris.iterator().next().getPath();
-        String newPath = path.replace(originalService, destService);
+        String newPath = path.replace("/find", "/remote-find");
         WebClient webClient = WebClient.create("http://localhost:8080");
 
         return webClient.get()
                 .uri(newPath)
                 .retrieve()
                 .bodyToMono(ShortAddress.class);
+    }
+
+    @GetMapping("/to-exit")
+    public void remoteFallback(ServerWebExchange exchange) {
+        String errorDescription = "Something went wrong. Both services are not working or request was incorrect.";
+        Throwable throwable = exchange.getAttributeOrDefault(
+                ServerWebExchangeUtils.HYSTRIX_EXECUTION_EXCEPTION_ATTR,null);
+        log.error("{} Cause: {}", errorDescription, throwable.getClass());
     }
 
 }

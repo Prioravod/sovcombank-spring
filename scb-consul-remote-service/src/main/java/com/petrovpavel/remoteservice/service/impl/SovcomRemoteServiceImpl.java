@@ -1,7 +1,5 @@
 package com.petrovpavel.remoteservice.service.impl;
 
-import com.petrovpavel.remoteservice.config.SSLFix;
-import com.petrovpavel.remoteservice.config.SSLUtil;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import com.kuliginstepan.dadata.client.DadataClient;
@@ -10,7 +8,6 @@ import com.kuliginstepan.dadata.client.domain.address.Address;
 import com.petrovpavel.service.openapi.model.ShortAddress;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,8 +22,7 @@ import org.springframework.stereotype.Service;
 public class SovcomRemoteServiceImpl {
 
     private final MapperFacade mapper;
-    @Autowired
-    DadataClient client;
+    private final DadataClient client;
 
     private Suggestion<Address> response = null;
 
@@ -48,8 +44,6 @@ public class SovcomRemoteServiceImpl {
         try {
             thread1 = new Thread(() -> {
                 try {
-//                    SSLUtil.turnOffSslChecking();
-//                    SSLFix.execute();
                     response = client.findAddressById(fiasCode).block();
                 }
                 catch (Exception ex) {
