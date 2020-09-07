@@ -13,7 +13,7 @@
     <description>Gateway project for includes microservices</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
     </properties>
 
@@ -94,34 +94,38 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>com.google.cloud.tools</groupId>-->
-<!--                <artifactId>jib-maven-plugin</artifactId>-->
-<!--                <version>2.1.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>default</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>dockerBuild</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <container>-->
-<!--                        <ports>-->
-<!--                            <port>8080</port>-->
-<!--                        </ports>-->
-<!--                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>-->
-<!--                    </container>-->
-<!--                    <from>-->
-<!--                        <image>openjdk:11-alpine</image>-->
-<!--                    </from>-->
-<!--                    <to>-->
-<!--                        <image>sovcombank-spring/${project.name}</image>-->
-<!--                    </to>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.1.0</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>dockerBuild</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <container>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                    <from>
+                        <image>openjdk:8-alpine</image>
+                    </from>
+                    <to>
+                        <image>sovcombank-spring/${project.name}</image>
+                        <tags>
+                            <tag>${project.version}</tag>
+                        </tags>
+                    </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>

@@ -30,4 +30,3 @@ services:
         -DCONSUL_HOST=discovery
     depends_on:
       - discovery
-#http://172.16.9.93:8500/ui/dc1/services
