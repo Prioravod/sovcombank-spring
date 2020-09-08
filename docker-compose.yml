@@ -20,6 +20,7 @@ services:
         -DCONSUL_HOST=discovery
     depends_on:
       - discovery
+      - postgres
 
   scb-consul-gateway:
     image: sovcombank-spring/scb-consul-gateway
@@ -30,3 +31,15 @@ services:
         -DCONSUL_HOST=discovery
     depends_on:
       - discovery
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=ib
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./create-schema-init.sql:/docker-entrypoint-initdb.d/1-schema.sql
+    ports:
+      - 5432:5432

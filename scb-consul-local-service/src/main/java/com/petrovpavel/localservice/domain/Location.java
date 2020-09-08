@@ -22,7 +22,7 @@ public class Location {
      * Id.
      */
     @Id
-    private Long id;
+    private Integer id;
 
     /**
      * Идентификатор записи ТС.
@@ -45,7 +45,7 @@ public class Location {
     /**
      * Код ФИАС
      */
-    @Column
+    @Column(columnDefinition = "fias_code")
     private String fiasCode;
 
 }

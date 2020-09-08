@@ -65,7 +65,7 @@
                             <generateApiTests>false</generateApiTests>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
-                                <dateLibrary>java11</dateLibrary>
+                                <dateLibrary>java8</dateLibrary>
                                 <java11>true</java11>
                                 <booleanGetterPrefix>is</booleanGetterPrefix>
                                 <useBeanValidation>true</useBeanValidation>

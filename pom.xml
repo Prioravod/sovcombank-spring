@@ -16,7 +16,6 @@
         <module>scb-consul-remote-service</module>
         <module>scb-consul-local-service</module>
         <module>scb-consul-gateway</module>
-        <module>scb-db-manager</module>
         <module>scb-openapi-api</module>
         <module>scb-openapi-schema</module>
     </modules>
@@ -48,6 +47,8 @@
         <hibernate-core.version>5.2.15.Final</hibernate-core.version>
         <hibernate-jpa-api.version>1.0.0.Final</hibernate-jpa-api.version>
         <postgresql.version>42.1.4</postgresql.version>
+        <jackson.version>2.11.0</jackson.version>
+        <maven-plugin.version>1.5.8.RELEASE</maven-plugin.version>
     </properties>
 
     <dependencyManagement>
