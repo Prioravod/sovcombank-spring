@@ -11,6 +11,8 @@
 
     <artifactId>scb-consul-local-service</artifactId>
     <description>Project for local DB search</description>
+    <name>scb-consul-local-service</name>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>8</java.version>
@@ -115,9 +117,9 @@
                     </from>
                     <to>
                         <image>sovcombank-spring/${project.name}</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                        </tags>
+<!--                        <tags>-->
+<!--                            <tag>${project.version}</tag>-->
+<!--                        </tags>-->
                     </to>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>

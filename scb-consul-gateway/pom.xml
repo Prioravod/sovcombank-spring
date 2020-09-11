@@ -11,6 +11,8 @@
 
     <artifactId>scb-consul-gateway</artifactId>
     <description>Gateway project for includes microservices</description>
+    <name>scb-consul-gateway</name>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>8</java.version>
@@ -124,9 +126,9 @@
                     </from>
                     <to>
                         <image>sovcombank-spring/${project.name}</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                        </tags>
+<!--                        <tags>-->
+<!--                            <tag>${project.version}</tag>-->
+<!--                        </tags>-->
                     </to>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
